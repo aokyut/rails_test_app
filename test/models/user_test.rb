@@ -5,7 +5,7 @@ class UserTest < ActiveSupport::TestCase
   #   assert true
   # end
   def setup
-    @user=User.new(name:"Example",email:"example@email.com")
+    @user=User.new(name:"Example",email:"example@email.com",password:"foobar",password_confirmation:"foobar")
   end
 
   test "should be valid" do
@@ -51,4 +51,13 @@ class UserTest < ActiveSupport::TestCase
     assert_not dup_user.valid?
   end
 
+  test "too short password should be invalid" do
+    @user.password=@user.password_confirmation="a"*5
+    assert_not @user.valid?
+  end
+
+  test "valid length password should be valid" do
+    @user.password=@user.password_confirmation="a"*6
+    assert @user.valid?
+  end
 end
