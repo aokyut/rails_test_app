@@ -1,5 +1,9 @@
 module KijisHelper
   def auther?
-    current_user==User.find_by(id:@kiji[:user_id])
+    if !current_user.nil?
+      return current_user.id==@kiji.user_id
+    else
+      return false
+    end
   end
 end

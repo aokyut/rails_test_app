@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@kiji,url:new_kiji_path) do |f| %>
+    <%= form_for(@kiji,url:kiji_url(@kiji.id)) do |f| %>
 
       <%= f.label :title %>
       <%= f.text_field :title, class: 'form-control', value: @kiji.title %>

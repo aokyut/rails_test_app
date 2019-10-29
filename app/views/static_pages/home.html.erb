@@ -10,7 +10,19 @@
 <div id="article_wrap">
 
     <div id="content">
-    
+
+        <% kijis=Kiji.all %>
+        <% kijis.each do | kiji | %>
+            <% @kiji=kiji %>
+            <h2><%= link_to @kiji.title,kiji_path(@kiji)%></h2>
+            <%= @kiji.created_at.strftime('%Y/%m/%d')%>
+            <% if auther? %>
+                <p class="editor">
+                    <%= link_to "編集",edit_kiji_path(@kiji) %>
+                    <%= link_to "削除",kiji_path(@kiji),method: :delete %>
+                </p>
+            <% end %>
+        <% end %>
                     <h2>どれもtrueかfalseかnilを判定するメソッドです。</h2>
                     <p>
                     nil?とempty?はrubyのメソッドであり、blank?とpresent?はrailsで拡張されたメソッドです。なので、blank?とpresent?はRailsでしか使えません。

@@ -20,8 +20,8 @@ class KijisController < ApplicationController
 
   # GET /kijis/1/edit
   def edit
-    kiji=Kiji.find(params[:id])
-    if auther? 
+    @kiji=Kiji.find(params[:id])
+    if auther?
     else
       redirect_to root_path
     end
@@ -31,11 +31,13 @@ class KijisController < ApplicationController
   # POST /kijis.json
   def create
     @kiji = Kiji.new(strong_params_kiji)
-    @kiji.user_id=@current_user[:id]
+    @kiji.user_id=current_user[:id]
     if @kiji.save   
+      flash[:success] = "Kiji was successfully created"
       redirect_to root_path
     else
-      flash[:danger]="invalid creation"
+      flash.now[:danger]="invalid creation"
+      render "new"
     end
   end
 
@@ -46,14 +48,13 @@ class KijisController < ApplicationController
   # PATCH/PUT /kijis/1
   # PATCH/PUT /kijis/1.json
   def update
-    respond_to do |format|
-      if @kiji.update(kiji_params)
-        format.html { redirect_to @kiji, notice: 'Kiji was successfully updated.' }
-        format.json { render :show, status: :ok, location: @kiji }
-      else
-        format.html { render :edit }
-        format.json { render json: @kiji.errors, status: :unprocessable_entity }
-      end
+  
+    if @kiji.update(kiji_params)
+      flash[:success]='Kiji was successfully updated.' 
+      redirect_to root_path
+    else
+      flash.now[:danger]="Kiji was not successfully update"
+      render "new"
     end
   end
 
