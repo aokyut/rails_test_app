@@ -1,6 +1,7 @@
 class KijisController < ApplicationController
   before_action :set_kiji, only: [:show, :edit, :update, :destroy]
 
+  include KijisHelper
   # GET /kijis
   # GET /kijis.json
   def index
@@ -20,7 +21,7 @@ class KijisController < ApplicationController
   # GET /kijis/1/edit
   def edit
     kiji=Kiji.find(params[:id])
-    if kiji.user_id == @current_user.id
+    if auther? 
     else
       redirect_to root_path
     end
@@ -29,13 +30,17 @@ class KijisController < ApplicationController
   # POST /kijis
   # POST /kijis.json
   def create
-    @kiji = Kiji.new(params[:kiji])
-    @kiji.user_id=@current_user.id
+    @kiji = Kiji.new(strong_params_kiji)
+    @kiji.user_id=@current_user[:id]
     if @kiji.save   
       redirect_to root_path
     else
       flash[:danger]="invalid creation"
     end
+  end
+
+  def strong_params_kiji
+    params.require(:kiji).permit(:title,:content)
   end
 
   # PATCH/PUT /kijis/1

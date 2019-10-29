@@ -1,6 +1,17 @@
-<h1>Editing Kiji</h1>
 
-<%= render 'form', kiji: @kiji %>
+<h1>Editing Article</h1>
 
-<%= link_to 'Show', @kiji %> |
-<%= link_to 'Back', kijis_path %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@kiji,url:new_kiji_path) do |f| %>
+
+      <%= f.label :title %>
+      <%= f.text_field :title, class: 'form-control', value: @kiji.title %>
+
+      <%= f.label :content %>
+      <%= f.text_area :content, class: 'form-control', valud: @kiji.content %>
+
+      <%= f.submit "Update article", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
