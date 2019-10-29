@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  resources :articles
+  resources :kijis
+  post "/kijis/new" => "kijis#create"
   get 'sessions/new'
   get 'users/new'
   root "static_pages#home"

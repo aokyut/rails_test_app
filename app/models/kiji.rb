@@ -1,0 +1,2 @@
+class Kiji < ApplicationRecord
+end
